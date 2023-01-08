@@ -32,4 +32,6 @@ differs for every browser. If you're using Chrome:
 - Go the Application tab
 - Find the `auth` cookie in the list. Copy the value. It should look something like this: `eyJhbGciOiJIUzI1NiI`
 
-2. Run `dotnet run`
+2. From powershell `$env:OMNIVORE_AUTH_TOKEN="<your token>"`
+
+3. Run `dotnet run`
