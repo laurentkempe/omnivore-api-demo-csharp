@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-const string apiUrl = "https://api-prod.omnivore.app/api/graphql";
+var apiUrl = Environment.GetEnvironmentVariable("OMNIVORE_API_URL") ?? "https://api-prod.omnivore.app/api/graphql";
 var settings = new JsonSerializerSettings
 {
     ContractResolver = new DefaultContractResolver
@@ -103,12 +103,7 @@ async Task<Search?> FetchPageAsync(string? cursor, int limit, string searchQuery
     await using var responseStream = await response.Content.ReadAsStreamAsync();
     await using var reader = new JsonTextReader(new StreamReader(responseStream));
 
-    //get content as string from responseStream
-    // var responseString = await response.Content.ReadAsStringAsync();
-
-    var fetchPageAsync = serializer.Deserialize<RootObject>(reader);
-
-    return fetchPageAsync?.Data.Search;
+    return serializer.Deserialize<RootObject>(reader)?.Data.Search;
 }
 
 public record RootObject(Data Data);
